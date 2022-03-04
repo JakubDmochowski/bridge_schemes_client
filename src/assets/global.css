@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.selectable {
+  cursor: pointer;
+}
+.invisible {
+  visibility: hidden;
+}
