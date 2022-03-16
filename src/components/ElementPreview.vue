@@ -48,6 +48,13 @@
         </div>
         <div class="mb-2">
           <b-input
+            label="Odzywka"
+            v-model="modalData.bid"
+            placeholder="1♣: 11+ pkt, 4+♣"
+          />
+        </div>
+        <div class="mb-2">
+          <b-input
             label="Treść"
             v-model="modalData.message"
             placeholder="1♣: 11+ pkt, 4+♣"
@@ -106,6 +113,7 @@ export default {
     modalData: {
       id: null,
       message: "",
+      bid: "",
       editId: null,
     },
   }),
@@ -118,6 +126,7 @@ export default {
     handleModalCancel() {
       this.showModal = false;
       this.modalData.editId = null;
+      this.modalData.bid = "";
       this.modalData.message = "";
       this.modalData.id = null;
     },
@@ -127,7 +136,7 @@ export default {
         : null;
       const newBid = {
         id: this.modalData.id || uuid(),
-        bid: this.modalData.message.split(":")[0],
+        bid: this.modalData.bid,
         message: this.modalData.message,
       };
       const bid = {
@@ -151,6 +160,7 @@ export default {
     handleElementEdit(element) {
       this.modalData.editId = element.id;
       this.modalData.message = element.message;
+      this.modalData.bid = element.bid;
       this.modalData.id = element.id;
       this.showModal = true;
     },

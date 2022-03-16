@@ -40,6 +40,8 @@ export default {
       (toParams) => {
         this.$store.state.adminPrivilege =
           (toParams && toParams.adminPrivilege === "true") || false;
+        this.$store.state.showIds =
+          (toParams && toParams.showIds === "true") || false;
       }
     );
   },
