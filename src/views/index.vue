@@ -10,16 +10,19 @@
     <preview-carousel
       v-model="navigation"
       :preview="preview"
+      @update:preview="preview = $event"
       @preview="handleElementPreview"
       @select="handleElementSelected"
+      @add-new="handleElementAddNew"
+      @refresh="handleElementRefresh"
     />
   </div>
 </template>
 
 <script>
-import NavigationBar from "./components/NavigationBar";
-import PreviewCarousel from "./components/PreviewCarousel";
-import axios from "/utilities/axios";
+import NavigationBar from "@/components/NavigationBar";
+import PreviewCarousel from "@/components/PreviewCarousel";
+import axios from "@/utilities/axios";
 
 export default {
   name: "App",
@@ -28,12 +31,22 @@ export default {
     PreviewCarousel,
   },
   data: () => ({
-    scheme: "precision",
     navigation: [],
     preview: null,
   }),
+  created() {
+    this.$watch(
+      () => this.$route.query,
+      (toParams) => {
+        this.$store.state.adminPrivilege =
+          (toParams && toParams.adminPrivilege === "true") || false;
+      }
+    );
+  },
   async mounted() {
-    const { data: origin } = await axios.get(`${this.scheme}\\origin`);
+    const { data: origin } = await axios.get(
+      `${this.$store.state.scheme}\\origin`
+    );
     this.navigation.push(origin);
     this.preview = origin;
   },
@@ -43,7 +56,7 @@ export default {
     },
     async handleElementSelected(selected, index) {
       const { data: element } = await axios.get(
-        `${this.scheme}\\${selected.id}`
+        `${this.$store.state.scheme}\\${selected.id}`
       );
       if (!element) {
         // notify that answer does not exist in the database
@@ -56,6 +69,21 @@ export default {
         this.navigation = newNavigation;
       }
       this.preview = element;
+    },
+    async handleElementRefresh(element) {
+      const { data: newEl } = await axios.get(
+        `${this.$store.state.scheme}\\${element.id}`
+      );
+      const oldElIndex = this.navigation.findIndex(
+        (el) => el.id === element.id
+      );
+      this.navigation = [
+        ...(oldElIndex > -1
+          ? this.navigation.slice(0, oldElIndex)
+          : this.navigation),
+        newEl,
+        ...(oldElIndex > -1 ? this.navigation.slice(oldElIndex + 1) : []),
+      ];
     },
     handleReset() {
       this.navigation = this.navigation.slice(0, 1);

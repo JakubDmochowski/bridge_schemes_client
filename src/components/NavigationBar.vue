@@ -95,10 +95,11 @@ export default {
         el.offsetWidth +
         getMargin(el, "marginRight") +
         getMargin(el, "marginLeft");
-      const separatorWidth =
-        sep.offsetWidth +
-        getMargin(sep, "marginRight") +
-        getMargin(sep, "marginLeft");
+      const separatorWidth = sep
+        ? sep.offsetWidth +
+          getMargin(sep, "marginRight") +
+          getMargin(sep, "marginLeft")
+        : 0;
       this.$refs["nav-carousel"].scroll({
         left: elementWidth * index + separatorWidth * (index - 1) + offset,
         behavior: "smooth",

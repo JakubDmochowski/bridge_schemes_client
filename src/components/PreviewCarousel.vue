@@ -11,14 +11,18 @@
       <element-preview
         v-bind="element"
         :navigation="modelValue"
+        :preview="preview"
+        @update:navigation="$emit('update:modelValue', $event)"
+        @update:preview="$emit('update:preview', $event)"
         @select="$emit('select', $event, index)"
+        @refresh="$emit('refresh', element)"
       />
     </div>
   </div>
 </template>
 
 <script>
-import ElementPreview from "./ElementPreview";
+import ElementPreview from "@/components/ElementPreview";
 
 export default {
   components: {
