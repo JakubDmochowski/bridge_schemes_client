@@ -47,17 +47,13 @@
           />
         </div>
         <div class="mb-2">
-          <b-input
-            label="Odzywka"
-            v-model="modalData.bid"
-            placeholder="1♣: 11+ pkt, 4+♣"
-          />
+          <b-input label="Odzywka" v-model="modalData.bid" placeholder="1♣" />
         </div>
         <div class="mb-2">
           <b-input
             label="Treść"
             v-model="modalData.message"
-            placeholder="1♣: 11+ pkt, 4+♣"
+            placeholder="11+ pkt, 4+♣"
           />
         </div>
         <div class="mt-4 flex justify-end">
