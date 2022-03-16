@@ -133,7 +133,6 @@ export default {
       const newBid = {
         id: this.modalData.id || uuid(),
         bid: this.modalData.bid,
-        message: this.modalData.message,
       };
       const bid = {
         id: this.id,
@@ -142,7 +141,10 @@ export default {
           ...(editIndex !== null
             ? this.next_steps.slice(0, editIndex)
             : this.next_steps),
-          newBid,
+          {
+            ...newBid,
+            message: this.modalData.message,
+          },
           ...(editIndex !== null ? this.next_steps.slice(editIndex + 1) : []),
         ],
       };
