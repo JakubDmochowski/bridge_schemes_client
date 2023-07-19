@@ -1,4 +1,4 @@
-# bridge_schemes_client
+Klient do aplikacja do zarządzania licytacją brydżową z możliwością edycji odzywek. 
 
 ## Project setup
 ```
@@ -19,6 +19,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
